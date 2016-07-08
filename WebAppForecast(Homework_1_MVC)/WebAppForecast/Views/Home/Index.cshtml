@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Main page";
+}
+
+<div class="jumbotron">
+    <h1>Weather Forecast</h1>   
+</div>
+<p class="lead">Simple, fast, easy to use forecasting service to get know whether you need an umbrella :)</p>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Weather in large cities</h2>
+        <p>
+            The service allows You to get weather from large cities like Kiev, 
+            Odessa and some others with already existing preset.
+             It may be faster and easier to check the weather.
+        </p>
+        <p>
+        <a class="btn btn-default" @Html.ActionLink("Large cities", "Cities", "City")
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Want to get more cities?</h2>
+        <p>In this case - welcome here! There is an opportunity to get any city you want just by filling one fields with neccesary info.</p>
+        <p>
+        <a class="btn btn-default" @Html.ActionLink("All cities", "AllCities", "All")
+        </p>
+    </div>
+</div>

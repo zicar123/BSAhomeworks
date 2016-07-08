@@ -1,0 +1,25 @@
+﻿@model List<WebAppForecast.Models.City>
+
+@{
+    ViewBag.Title = "Cities";
+}
+
+<h2>Cities of Ukraine</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+
+
+<div class="row">
+        @foreach (var city in Model)
+        {
+            <div class="colCity">
+                <p>
+                    <a class="btn btnCity" @Html.ActionLink(@city.cityName, "GetWeatherForThisCity", new { name = city.cityName })
+                </p>
+            </div>
+        }
+</div>
+

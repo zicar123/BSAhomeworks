@@ -1,0 +1,77 @@
+﻿@model WebAppForecast.Models.RootObject
+
+@{
+    ViewBag.Title = "Weather tables";
+    string isnull = Model == null ? "" : Model.city.name;
+}
+
+<h2>Weather for - @Model.city.name , @Model.city.country</h2>
+
+<div>
+    <hr />
+    @using (Html.BeginForm(new { cityName = Model.city.name }))
+    {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <p>
+                       @Html.DropDownListFor(x => x.dropdown, new[] {
+                       new SelectListItem() { Text = "For 1 day"},
+                       new SelectListItem() { Text ="For 3 days"},
+                       new SelectListItem() { Text ="For 5 days"} })
+                    </p>
+                    <input type="submit" value="Proceed" class="btn btn-default" />
+                </div>
+            </div>
+    }
+
+    <br>
+    &nbsp;
+
+        <table class="cityTable">
+        <tr>
+            <td>
+                <table border="1" class="cityTableInner">
+                    <tr>
+                        <td>Time</td>
+                        <td>Temp</td>
+                        <td>Pressure</td>
+                        <td>Humidity</td>
+                    </tr>
+                    @for (int i = 0; i < Model.list.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model.list[i].dt_txt</td>
+                            <td>@Model.list[i].main.temp</td>
+                            <td>@Model.list[i].main.pressure</td>
+                            <td>@Model.list[i].main.humidity</td>
+                        </tr>
+                    }
+                </table>
+            </td>
+            <td></td>
+            <td>
+                <table border="1" class="cityTableInner">
+                    <tr>
+                        <td>Wind speed</td>
+                        <td>Wind degree</td>
+                        <td>Max temp</td>
+                        <td>Min temp</td>
+
+                    </tr>
+                    @for (int i = 0; i < Model.list.Count; i++)
+                    {
+                        <tr>
+
+                            <td>@Model.list[i].wind.speed</td>
+                            <td>@Model.list[i].wind.deg</td>
+                            <td>@Model.list[i].main.temp_max</td>
+                            <td>@Model.list[i].main.temp_min</td>
+                    </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+    @Html.ActionLink("Back to list of cities", "Cities")
+    <br />
+</div>
