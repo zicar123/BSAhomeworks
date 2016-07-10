@@ -6,6 +6,13 @@ namespace WebAppForecast.Controllers
 {
     public class AllController : Controller
     {
+        private ICitiesServices citiesService;
+
+        public AllController(ICitiesServices services)
+        {
+            citiesService = services;
+        }
+
         private static RootObject deserializedObject;
 
         public ActionResult AllCities()
@@ -14,11 +21,11 @@ namespace WebAppForecast.Controllers
         }
 
         [HttpPost]
-        public ActionResult AllCities(UserCity model)
+        public ActionResult AllCities(City model)
         {
             if (ModelState.IsValid)
             {
-                deserializedObject = new CitiesServices().Deserializer(model.userCity);
+                deserializedObject = citiesService.Deserializer(model.cityName);
                 return RedirectToAction("GetWeatherChoosen");
             }
             return View();
@@ -32,7 +39,7 @@ namespace WebAppForecast.Controllers
         [HttpPost]
         public ActionResult GetWeatherChoosen(string cityName, RootObject obj)
         {
-            return View(new CitiesServices().Deserializer(cityName, obj.dropdown));
+            return View(citiesService.Deserializer(cityName, obj.dropdown));
         }
     }
 }

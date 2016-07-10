@@ -5,7 +5,7 @@ using WebAppForecast.Models;
 
 namespace WebAppForecast.Services
 {
-    public class CitiesServices
+    public class CitiesServices : ICitiesServices
     {
         private static List<City> cities;
 

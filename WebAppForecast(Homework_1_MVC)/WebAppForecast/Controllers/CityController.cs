@@ -7,11 +7,11 @@ namespace WebAppForecast.Controllers
 {
     public class CityController : Controller
     {
-        private CitiesServices citiesService;
+        private ICitiesServices citiesService;
 
-        public CityController()
+        public CityController(ICitiesServices services)
         {
-            citiesService = new CitiesServices();
+            citiesService = services;
         }
 
         public ActionResult Cities()
@@ -21,13 +21,13 @@ namespace WebAppForecast.Controllers
 
         public ActionResult GetWeatherForThisCity(string name)
         {
-            return View(new CitiesServices().Deserializer(name));
+            return View(citiesService.Deserializer(name));
         }
 
         [HttpPost]
         public ActionResult GetWeatherForThisCity(string cityName, RootObject obj)
         { 
-            return View(new CitiesServices().Deserializer(cityName, obj.dropdown));
+            return View(citiesService.Deserializer(cityName, obj.dropdown));
         }
     }
 }
