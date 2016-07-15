@@ -1,0 +1,25 @@
+﻿@model List<WebAppForecast.ModelsHistory.CityHistory>
+
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>View history</h2>
+
+<div>
+    <hr />
+    <table border="1" class="cityTableInner">
+        <tr>
+            <td>Watched at:</td>
+            <td>City name:</td>
+        </tr>
+        @foreach (WebAppForecast.ModelsHistory.CityHistory item in Model)
+        {
+            <tr>
+                <td>@item.Added_at</td>
+                <td>@Html.ActionLink(item.CityName, "HistoryForThisCity", new { id = item.Id })</td>
+            </tr>
+        }
+    </table>
+</div>
+

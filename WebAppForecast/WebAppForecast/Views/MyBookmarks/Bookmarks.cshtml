@@ -1,0 +1,31 @@
+﻿@model List<WebAppForecast.Entity.Bookmark>
+
+@{
+    ViewBag.Title = "Bookmarks";
+}
+
+<h2>Bookmarks</h2>
+
+    
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <table class="cityTable">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(item.Title, "GetWeather", new { cityId = item.BookmarkId })</td>
+                        <td>&nbsp;</td>
+                        <td>@Html.ActionLink("Del", "DeleteBookmark", new { bmId = item.BookmarkId})</td>
+                    </tr>
+                }
+                    </table>
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
