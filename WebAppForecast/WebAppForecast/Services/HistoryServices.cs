@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebAppForecast.Models;
 using WebAppForecast.Context;
 using WebAppForecast.ModelsHistory;
@@ -7,12 +8,12 @@ namespace WebAppForecast.Services
 {
     public class HistoryServices : IHistoryServices
     {
-        public void AddToHistory(ICitiesServices citiesService, string name)
+        public async Task AddToHistoryAsync(ICitiesServices citiesService, string name)
         {
-            RootObject obj = citiesService.Deserializer(name);
-            using (CitiesContext context = new CitiesContext())
+            var obj = await citiesService.DeserializerAsync(name);
+            using (var context = new CitiesContext())
             {
-                CityHistory ch = new CityHistory()
+                var ch = new CityHistory
                 {
                     id_city = obj.city.id,
                     CityName = obj.city.name,
@@ -22,7 +23,7 @@ namespace WebAppForecast.Services
 
                 for (int i = 0; i < obj.list.Count; i++)
                 {
-                    ch.Histories.Add(new History()
+                    ch.Histories.Add(new History
                     {
                         deg = obj.list[i].wind.deg,
                         dt_txt = obj.list[i].dt_txt,
@@ -35,17 +36,17 @@ namespace WebAppForecast.Services
                     });
                 }
 
-                context.history.Add(ch);
-                context.SaveChanges();
+                context.History.Add(ch);
+                await context.SaveChangesAsync();
             }
         }
 
-        public void AddToHistory(ICitiesServices citiesService, string name, string dropDown)
+        public async Task AddToHistoryAsync(ICitiesServices citiesService, string name, string dropDown)
         {
-            RootObject obj = citiesService.Deserializer(name, dropDown);
-            using (CitiesContext context = new CitiesContext())
+            var obj = await citiesService.DeserializerAsync(name, dropDown);
+            using (var context = new CitiesContext())
             {
-                CityHistory ch = new CityHistory()
+                var ch = new CityHistory
                 {
                     id_city = obj.city.id,
                     CityName = obj.city.name,
@@ -55,7 +56,7 @@ namespace WebAppForecast.Services
 
                 for (int i = 0; i < obj.list.Count; i++)
                 {
-                    ch.Histories.Add(new History()
+                    ch.Histories.Add(new History
                     {
                         deg = obj.list[i].wind.deg,
                         dt_txt = obj.list[i].dt_txt,
@@ -68,8 +69,8 @@ namespace WebAppForecast.Services
                     });
                 }
 
-                context.history.Add(ch);
-                context.SaveChanges();
+                context.History.Add(ch);
+                await context.SaveChangesAsync();
             }
         }
     }

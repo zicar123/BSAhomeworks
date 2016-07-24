@@ -5,7 +5,7 @@ namespace WebAppForecast.Context
 {
     public class CitiesContext : DbContext
     {
-        public DbSet<CityHistory> history { get; set; }
+        public DbSet<CityHistory> History { get; set; }
 
         public CitiesContext() : base()
         {

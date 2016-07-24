@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using WebAppForecast.Services;
 using WebAppForecast.Models;
 
@@ -6,31 +7,32 @@ namespace WebAppForecast.Controllers
 {
     public class CityController : Controller
     {
-        private ICitiesServices citiesService;
-        private IHistoryServices historyService;
+        private readonly ICitiesServices _citiesService;
+        private readonly IHistoryServices _historyService;
 
         public CityController(ICitiesServices services, IHistoryServices hservices)
         {
-            citiesService = services;
-            historyService = hservices;
+            _citiesService = services;
+            _historyService = hservices;
         }
 
         public ActionResult Cities()
         {
-            return View(citiesService.GetCities());
+            return View(_citiesService.GetCities());
         }
 
-        public ActionResult GetWeatherForThisCity(string name)
+        [HttpGet]
+        public async Task<ActionResult> GetWeatherForThisCity(string name)
         {
-            historyService.AddToHistory(citiesService, name);
-            return View(citiesService.Deserializer(name));
+            await _historyService.AddToHistoryAsync(_citiesService, name);
+            return View(await _citiesService.DeserializerAsync(name));
         }
 
         [HttpPost]
-        public ActionResult GetWeatherForThisCity(string cityName, RootObject obj)
+        public async Task<ActionResult> GetWeatherForThisCity(string cityName, RootObject obj)
         {
-            historyService.AddToHistory(citiesService, cityName, obj.dropdown);
-            return View(citiesService.Deserializer(cityName, obj.dropdown));
+            await _historyService.AddToHistoryAsync(_citiesService, cityName, obj.dropdown);
+            return View(await _citiesService.DeserializerAsync(cityName, obj.dropdown));
         }
     }
 }

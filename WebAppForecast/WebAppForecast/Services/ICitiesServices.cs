@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebAppForecast.Models;
 
 namespace WebAppForecast.Services
@@ -6,7 +7,7 @@ namespace WebAppForecast.Services
     public interface ICitiesServices
     {
         List<City> GetCities();
-        RootObject Deserializer(string cityName, string dropdownValue);
-        RootObject Deserializer(string cityName);
+        Task<RootObject> DeserializerAsync(string cityName, string dropdownValue);
+        Task<RootObject> DeserializerAsync(string cityName);
     }
 }

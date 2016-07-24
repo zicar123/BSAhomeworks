@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebAppForecast.Context;
 
@@ -6,18 +7,18 @@ namespace WebAppForecast.Controllers
 {
     public class HistoryController : Controller
     {
-        public ActionResult GetHistoryList()
+        public async Task<ActionResult> GetHistoryList()
         {
             using (var context = new CitiesContext())
             {
-                return View(context.history.ToList());
+                return View(await context.History.ToListAsync());
             }
         }
 
-        public ActionResult HistoryForThisCity(int id)
+        public async Task<ActionResult> HistoryForThisCity(int id)
         {
             var context = new CitiesContext();
-            return View(context.history.FirstOrDefault(x => x.Id.Equals(id)));
+            return View(await context.History.FirstOrDefaultAsync(x => x.Id.Equals(id)));
 
         }
     }
